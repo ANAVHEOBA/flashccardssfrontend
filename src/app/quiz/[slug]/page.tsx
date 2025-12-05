@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useProgress } from '@/contexts/ProgressContext';
 import QuizCard from '@/components/quiz/QuizCard';
@@ -15,7 +15,9 @@ const QUESTION_OPTIONS = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50];
 export default function QuizPage() {
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
   const slug = params.slug as LanguageSlug;
+  const countFromUrl = searchParams.get('count');
 
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const {
@@ -32,8 +34,12 @@ export default function QuizPage() {
     endQuiz,
   } = useProgress();
 
-  const [selectedQuestionCount, setSelectedQuestionCount] = useState(10);
+  const initialCount = countFromUrl ? parseInt(countFromUrl, 10) : 10;
+  const [selectedQuestionCount, setSelectedQuestionCount] = useState(
+    QUESTION_OPTIONS.includes(initialCount) ? initialCount : 10
+  );
   const [quizStarted, setQuizStarted] = useState(false);
+  const [autoStart, setAutoStart] = useState(!!countFromUrl);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showResults, setShowResults] = useState(false);
   const [currentAnswerRevealed, setCurrentAnswerRevealed] = useState(false);
@@ -44,6 +50,15 @@ export default function QuizPage() {
       router.push('/');
     }
   }, [isAuthenticated, authLoading, router]);
+
+  // Auto-start quiz if count is provided in URL
+  useEffect(() => {
+    if (isAuthenticated && autoStart && !quizStarted && !quizSession) {
+      setAutoStart(false);
+      handleStartQuiz();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated, autoStart]);
 
   // Auto-submit when timer runs out
   useEffect(() => {

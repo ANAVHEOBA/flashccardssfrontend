@@ -9,6 +9,7 @@ import { useProgress } from '@/contexts/ProgressContext';
 import FlashcardList from '@/components/flashcard/FlashcardList';
 import FlashcardSearchBar from '@/components/flashcard/FlashcardSearchBar';
 import ProgressStatsCard from '@/components/progress/ProgressStatsCard';
+import PracticeModeModal from '@/components/practice/PracticeModeModal';
 import { LanguageSlug } from '@/types/language';
 import { languageService } from '@/services/language.service';
 
@@ -35,6 +36,7 @@ export default function LanguageDetailPage() {
   const { languageProgress, fetchLanguageProgress } = useProgress();
 
   const [showGenerateModal, setShowGenerateModal] = useState(false);
+  const [showPracticeModal, setShowPracticeModal] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
@@ -58,6 +60,16 @@ export default function LanguageDetailPage() {
       await fetchFlashcards(slug);
       setShowGenerateModal(false);
     }
+  };
+
+  const handleSelectFlashcard = () => {
+    setShowPracticeModal(false);
+    router.push(`/practice/${slug}`);
+  };
+
+  const handleSelectQuiz = (questionCount: number) => {
+    setShowPracticeModal(false);
+    router.push(`/quiz/${slug}?count=${questionCount}`);
   };
 
   if (authLoading || !isAuthenticated) {
@@ -136,7 +148,7 @@ export default function LanguageDetailPage() {
               {(selectedLanguage?.isGenerated || flashcards.length > 0) ? (
                 <>
                   <button
-                    onClick={() => router.push(`/practice/${slug}`)}
+                    onClick={() => setShowPracticeModal(true)}
                     className="flex-1 md:flex-none px-4 md:px-6 py-2 bg-primary text-background rounded-lg text-sm md:text-base font-medium hover:bg-primary-hover transition-colors"
                   >
                     Start Practice
@@ -242,6 +254,15 @@ export default function LanguageDetailPage() {
           </div>
         </div>
       )}
+
+      {/* Practice Mode Modal */}
+      <PracticeModeModal
+        isOpen={showPracticeModal}
+        onClose={() => setShowPracticeModal(false)}
+        onSelectFlashcard={handleSelectFlashcard}
+        onSelectQuiz={handleSelectQuiz}
+        languageName={selectedLanguage?.name || slug}
+      />
     </div>
   );
 }
