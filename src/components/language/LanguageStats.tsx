@@ -14,12 +14,12 @@ export default function LanguageStats({
   if (isLoading || !stats) {
     return (
       <section className="bg-card border-y border-card-hover">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center animate-pulse">
+        <div className="container mx-auto px-4 py-4 md:py-6 lg:py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8 text-center animate-pulse">
             {[...Array(4)].map((_, i) => (
               <div key={i}>
-                <div className="h-10 w-16 bg-background rounded mx-auto mb-2"></div>
-                <div className="h-4 w-24 bg-background rounded mx-auto"></div>
+                <div className="h-8 md:h-10 w-12 md:w-16 bg-background rounded mx-auto mb-2"></div>
+                <div className="h-3 md:h-4 w-20 md:w-24 bg-background rounded mx-auto"></div>
               </div>
             ))}
           </div>
@@ -30,31 +30,31 @@ export default function LanguageStats({
 
   return (
     <section className="bg-card border-y border-card-hover">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+      <div className="container mx-auto px-4 py-4 md:py-6 lg:py-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 lg:gap-8 text-center">
           <div>
-            <div className="text-3xl font-bold text-primary">
+            <div className="text-2xl md:text-3xl font-bold text-primary">
               {stats.totalLanguages}
             </div>
-            <div className="text-sm text-secondary mt-1">Languages</div>
+            <div className="text-xs md:text-sm text-secondary mt-1">Languages</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary">
+            <div className="text-2xl md:text-3xl font-bold text-primary">
               {stats.totalKeywords}
             </div>
-            <div className="text-sm text-secondary mt-1">Flashcards</div>
+            <div className="text-xs md:text-sm text-secondary mt-1">Flashcards</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary">
+            <div className="text-2xl md:text-3xl font-bold text-primary">
               {stats.generatedCount}
             </div>
-            <div className="text-sm text-secondary mt-1">Generated</div>
+            <div className="text-xs md:text-sm text-secondary mt-1">Generated</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary">
+            <div className="text-2xl md:text-3xl font-bold text-primary">
               {stats.pendingCount}
             </div>
-            <div className="text-sm text-secondary mt-1">Pending</div>
+            <div className="text-xs md:text-sm text-secondary mt-1">Pending</div>
           </div>
         </div>
       </div>

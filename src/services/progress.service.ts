@@ -5,6 +5,11 @@ import {
   GetPracticeFlashcardsResponse,
   SubmitPracticeRequest,
   SubmitPracticeResponse,
+  GetQuizResponse,
+  SubmitQuizRequest,
+  SubmitQuizResponse,
+  QuizSession,
+  QuizSessionStats,
   LanguageProgress,
   ProgressSummary,
   PracticeSessionStats,
@@ -58,6 +63,33 @@ export const progressService = {
    */
   async getProgressSummary(): Promise<ApiResponse<ProgressSummary>> {
     return apiClient.get<ProgressSummary>('/api/progress/summary', true);
+  },
+
+  /**
+   * Get quiz questions for a language (multiple choice with timer)
+   */
+  async getQuizQuestions(
+    slug: LanguageSlug,
+    limit: number = 10
+  ): Promise<ApiResponse<GetQuizResponse>> {
+    return apiClient.get<GetQuizResponse>(
+      `/api/progress/quiz/${slug}?limit=${limit}`,
+      true
+    );
+  },
+
+  /**
+   * Submit quiz results (with session validation)
+   */
+  async submitQuizResults(
+    slug: LanguageSlug,
+    request: SubmitQuizRequest
+  ): Promise<ApiResponse<SubmitQuizResponse>> {
+    return apiClient.post<SubmitQuizResponse>(
+      `/api/progress/quiz/${slug}`,
+      request,
+      true
+    );
   },
 
   /**
@@ -157,5 +189,75 @@ export const progressService = {
     if (accuracy >= 75) return 'text-blue-500';
     if (accuracy >= 50) return 'text-yellow-500';
     return 'text-red-500';
+  },
+
+  /**
+   * Calculate quiz session statistics
+   */
+  calculateQuizStats(
+    quizSession: QuizSession,
+    endTime: Date
+  ): QuizSessionStats {
+    let correct = 0;
+    let incorrect = 0;
+
+    quizSession.questions.forEach((question) => {
+      const selectedOptionId = quizSession.answers.get(question.flashcardId);
+      if (selectedOptionId === question.correctOptionId) {
+        correct++;
+      } else if (selectedOptionId) {
+        incorrect++;
+      }
+    });
+
+    const total = quizSession.questions.length;
+    const answered = correct + incorrect;
+    const timeUsedSeconds = Math.floor(
+      (endTime.getTime() - quizSession.startedAt.getTime()) / 1000
+    );
+    const expired = endTime > quizSession.expiresAt;
+
+    return {
+      total,
+      correct,
+      incorrect,
+      accuracy: answered > 0 ? (correct / answered) * 100 : 0,
+      timeUsedSeconds,
+      expired,
+    };
+  },
+
+  /**
+   * Format timer display (MM:SS)
+   */
+  formatTimer(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  },
+
+  /**
+   * Get remaining time in seconds from expiration date
+   */
+  getRemainingSeconds(expiresAt: Date): number {
+    const now = new Date();
+    const remaining = Math.floor((expiresAt.getTime() - now.getTime()) / 1000);
+    return Math.max(0, remaining);
+  },
+
+  /**
+   * Check if quiz session has expired
+   */
+  isQuizExpired(expiresAt: Date): boolean {
+    return new Date() > expiresAt;
+  },
+
+  /**
+   * Get timer color based on remaining time
+   */
+  getTimerColor(remainingSeconds: number): string {
+    if (remainingSeconds <= 60) return 'text-red-500'; // Last minute
+    if (remainingSeconds <= 180) return 'text-yellow-500'; // Last 3 minutes
+    return 'text-primary';
   },
 };

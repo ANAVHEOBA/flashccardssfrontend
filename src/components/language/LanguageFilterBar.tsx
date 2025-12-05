@@ -14,12 +14,12 @@ export default function LanguageFilterBar({
   onSortChange,
 }: LanguageFilterBarProps) {
   return (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-secondary mr-2">Filter:</span>
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6 md:mb-8">
+      <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
+        <span className="text-xs md:text-sm text-secondary mr-1 md:mr-2 whitespace-nowrap">Filter:</span>
         <button
           onClick={() => onFilterChange('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
             currentFilter === 'all'
               ? 'bg-primary text-background'
               : 'bg-card text-secondary hover:bg-card-hover'
@@ -29,7 +29,7 @@ export default function LanguageFilterBar({
         </button>
         <button
           onClick={() => onFilterChange('generated')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
             currentFilter === 'generated'
               ? 'bg-primary text-background'
               : 'bg-card text-secondary hover:bg-card-hover'
@@ -39,7 +39,7 @@ export default function LanguageFilterBar({
         </button>
         <button
           onClick={() => onFilterChange('pending')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors whitespace-nowrap ${
             currentFilter === 'pending'
               ? 'bg-primary text-background'
               : 'bg-card text-secondary hover:bg-card-hover'
@@ -49,14 +49,14 @@ export default function LanguageFilterBar({
         </button>
       </div>
 
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-secondary mr-2">Sort by:</span>
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <span className="text-xs md:text-sm text-secondary mr-1 md:mr-2 whitespace-nowrap">Sort by:</span>
         <select
           value={currentSort}
           onChange={(e) =>
             onSortChange(e.target.value as 'name' | 'keywords' | 'generated')
           }
-          className="px-4 py-2 bg-card border border-card-hover rounded-lg text-sm font-medium hover:bg-card-hover transition-colors focus:outline-none focus:border-primary cursor-pointer"
+          className="flex-1 sm:flex-none px-3 md:px-4 py-2 bg-card border border-card-hover rounded-lg text-xs md:text-sm font-medium hover:bg-card-hover transition-colors focus:outline-none focus:border-primary cursor-pointer"
         >
           <option value="name">Name</option>
           <option value="keywords">Keywords Count</option>

@@ -4,6 +4,7 @@ import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { FlashcardProvider } from "@/contexts/FlashcardContext";
+import { ProgressProvider } from "@/contexts/ProgressContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,9 @@ export default function RootLayout({
       >
         <AuthProvider>
           <LanguageProvider>
-            <FlashcardProvider>{children}</FlashcardProvider>
+            <FlashcardProvider>
+              <ProgressProvider>{children}</ProgressProvider>
+            </FlashcardProvider>
           </LanguageProvider>
         </AuthProvider>
       </body>

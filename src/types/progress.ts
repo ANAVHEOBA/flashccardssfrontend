@@ -27,6 +27,60 @@ export interface SubmitPracticeResponse {
   message: string;
 }
 
+// Quiz Types (Multiple Choice with Timer)
+
+export interface QuizOption {
+  id: string;
+  text: string;
+}
+
+export interface QuizQuestion {
+  flashcardId: string;
+  keyword: string;
+  options: QuizOption[];
+  correctOptionId: string;
+}
+
+export interface GetQuizResponse {
+  language: string;
+  count: number;
+  questions: QuizQuestion[];
+  sessionId: string;
+  startedAt: string;
+  expiresAt: string;
+  timeLimitMinutes: number;
+  timeRemainingSeconds: number;
+}
+
+export interface SubmitQuizRequest {
+  sessionId: string;
+  results: PracticeResult[];
+}
+
+export interface SubmitQuizResponse {
+  message: string;
+}
+
+export interface QuizSession {
+  languageSlug: string;
+  sessionId: string;
+  questions: QuizQuestion[];
+  currentIndex: number;
+  answers: Map<string, string>; // flashcardId -> selectedOptionId
+  startedAt: Date;
+  expiresAt: Date;
+  timeLimitMinutes: number;
+}
+
+export interface QuizSessionStats {
+  total: number;
+  correct: number;
+  incorrect: number;
+  accuracy: number;
+  timeUsedSeconds: number;
+  expired: boolean;
+}
+
 export interface LanguageProgress {
   language: string;
   slug: string;
@@ -47,6 +101,7 @@ export interface ProgressSummary {
 }
 
 export interface PracticeSession {
+  languageSlug: string;
   flashcards: PracticeFlashcard[];
   currentIndex: number;
   results: Map<string, boolean>;

@@ -25,6 +25,8 @@ class ApiClient {
       const token = this.getToken();
       if (token) {
         headers['Authorization'] = `Bearer ${token}`;
+      } else {
+        console.error('Authentication required but no token found in localStorage');
       }
     }
 
@@ -59,6 +61,15 @@ class ApiClient {
 
       if (!response.ok) {
         throw new Error(data.message || 'Request failed');
+      }
+
+      // If the response doesn't have a success field, wrap it
+      if (data.success === undefined) {
+        return {
+          success: true,
+          message: 'Success',
+          data: data,
+        };
       }
 
       return data;

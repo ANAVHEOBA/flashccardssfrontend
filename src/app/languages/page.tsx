@@ -37,15 +37,15 @@ export default function LanguagesPage() {
     return (
       <div className="min-h-screen bg-background">
         <header className="border-b border-card-hover">
-          <div className="container mx-auto px-4 py-4">
-            <h1 className="text-2xl font-bold">
+          <div className="container mx-auto px-4 py-3 md:py-4">
+            <h1 className="text-xl md:text-2xl font-bold">
               Flashcards<span className="text-primary">.ai</span>
             </h1>
           </div>
         </header>
-        <div className="container mx-auto px-4 py-20 text-center">
-          <div className="animate-spin w-16 h-16 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
-          <p className="text-secondary mt-4">Loading languages...</p>
+        <div className="container mx-auto px-4 py-12 md:py-20 text-center">
+          <div className="animate-spin w-12 h-12 md:w-16 md:h-16 border-4 border-primary border-t-transparent rounded-full mx-auto"></div>
+          <p className="text-sm md:text-base text-secondary mt-4">Loading languages...</p>
         </div>
       </div>
     );
@@ -58,22 +58,22 @@ export default function LanguagesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="border-b border-card-hover">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="border-b border-card-hover sticky top-0 bg-background z-40">
+        <div className="container mx-auto px-4 py-3 md:py-4 flex justify-between items-center">
           <h1
             onClick={() => router.push('/')}
-            className="text-2xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
+            className="text-xl md:text-2xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
           >
             Flashcards<span className="text-primary">.ai</span>
           </h1>
-          <nav className="flex gap-6">
+          <nav className="flex gap-3 md:gap-6">
             <button
               onClick={() => router.push('/')}
-              className="text-secondary hover:text-foreground transition-colors"
+              className="text-sm md:text-base text-secondary hover:text-foreground transition-colors"
             >
               Home
             </button>
-            <button className="text-primary font-medium">Languages</button>
+            <button className="text-sm md:text-base text-primary font-medium">Languages</button>
           </nav>
         </div>
       </header>
@@ -82,12 +82,12 @@ export default function LanguagesPage() {
       <LanguageStats stats={stats} isLoading={isLoading} />
 
       {/* Main Content */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="mb-8">
-          <h2 className="text-4xl font-bold mb-3">
+      <section className="container mx-auto px-4 py-8 md:py-16">
+        <div className="mb-6 md:mb-8">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-2 md:mb-3">
             Choose Your <span className="text-primary">Language</span>
           </h2>
-          <p className="text-secondary text-lg">
+          <p className="text-secondary text-sm md:text-base lg:text-lg">
             Select a programming language to start learning its keywords
           </p>
         </div>
