@@ -75,6 +75,7 @@ export const languageService = {
       rust: '🦀',
       c: '🔧',
       kotlin: '🎯',
+      solidity: '💎',
     };
 
     return icons[slug] || '💻';

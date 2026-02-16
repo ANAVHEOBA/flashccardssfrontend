@@ -36,7 +36,8 @@ export type LanguageSlug =
   | 'go'
   | 'rust'
   | 'c'
-  | 'kotlin';
+  | 'kotlin'
+  | 'solidity';
 
 export interface LanguageStats {
   totalLanguages: number;

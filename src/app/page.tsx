@@ -23,6 +23,7 @@ export default function Home() {
     { name: "Rust", slug: "rust", keywords: 54, icon: "🦀" },
     { name: "C", slug: "c", keywords: 57, icon: "🔧" },
     { name: "Kotlin", slug: "kotlin", keywords: 75, icon: "🎯" },
+    { name: "Solidity", slug: "solidity", keywords: 32, icon: "💎" },
   ];
 
   const handleSwitchToRegister = () => {
@@ -115,7 +116,7 @@ export default function Home() {
             <span className="text-primary">AI-Powered Flashcards</span>
           </h2>
           <p className="text-base md:text-xl text-secondary mb-6 md:mb-8 max-w-2xl mx-auto px-2">
-            Learn 517 essential programming keywords across 9 languages. Track
+            Learn 549 essential programming keywords across 10 languages. Track
             your progress, practice smart, and level up your coding knowledge.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4 sm:px-0">
@@ -146,11 +147,11 @@ export default function Home() {
         <div className="container mx-auto px-4 py-6 md:py-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
             <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">9</div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">10</div>
               <div className="text-xs md:text-sm text-secondary mt-1">Languages</div>
             </div>
             <div>
-              <div className="text-2xl md:text-3xl font-bold text-primary">517</div>
+              <div className="text-2xl md:text-3xl font-bold text-primary">549</div>
               <div className="text-xs md:text-sm text-secondary mt-1">Flashcards</div>
             </div>
             <div>
